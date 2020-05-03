@@ -101,7 +101,7 @@ int Game::Init(std::filesystem::path wd) {
     displayManager.DestroyMainWindow();
     return EXIT_SUCCESS;
 };
-
+int i = 0;
 void Game::Update(int fps, float delta) {
     SDL_Event event;
     if(SDL_PollEvent(&event)) {
@@ -117,7 +117,7 @@ void Game::Update(int fps, float delta) {
     //SDL_PumpEvents();
     playerInteraction.CheckKeys();
     playerInteraction.MouseUpdate();
-    world.playerAABB.Build(&world.player);
+/*    world.playerAABB.Build(&world.player);
     if(world.playerAABB.IsIntersecting(&world.block3)) {
         glm::vec3 normal = glm::vec3(0,0,1);
         glm::vec3 speed = glm::vec3 (world.player.GetSpeedStrafe(),0,world.player.GetSpeed());
@@ -141,7 +141,10 @@ void Game::Update(int fps, float delta) {
         world.player.SetSpeedStrafe(-speed.x);
         //world.player.SetSpeedStrafe(world.player.GetSpeed());
        // world.player.SetSpeed(0);
-    }
+    }*/
+
+    world.playerAABB.Build(&world.player);
+   if( world.playerAABB.IsIntersecting(&world.block3)) printf("Collision %i!\n",i++);
     world.player.Update(delta);
     renderGame.Render(fps,delta,&world);
 }
