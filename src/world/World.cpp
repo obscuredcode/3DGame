@@ -1,0 +1,29 @@
+//
+// Created by najimac on 5/2/20.
+//
+
+#include "world/World.h"
+
+void World::Create() {
+    t.Create(0,-10,0,-5,90,0,5,3,0.2);
+    t.SetColor(0.5f,0.0f,0.0f,1);
+    block1.Build(&t);
+    Tiles.push_back(t);
+    t.Create(0,0,0,-5,90,0,5,3,0.2);
+    t.SetColor(0.0f,0.5f,0.0f,1);
+    block2.Build(&t);
+    Tiles.push_back(t);
+
+    t.Create(0,-5,0,0,0,0,5,3,0.2);
+    t.SetColor(0.0f,0.0f,0.5f,1);
+    block3.Build(&t);
+    Tiles.push_back(t);
+
+    teapot.Create(1,-15,-2,-5,0,0,1.0f,1.0f,1.0f);
+    teapot.SetColor(1,1,1,1);
+    Tiles.push_back(teapot);
+
+    t.Create(0,-5,-3,3,0,0,1000,0.1,1000);
+    t.SetColor(0.75f,0.75f,0.75f,1.0f);
+    Tiles.push_back(t);
+}

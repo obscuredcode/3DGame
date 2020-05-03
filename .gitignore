@@ -1,0 +1,7 @@
+.idea
+*.log
+**/*.log
+lib/libccd/**
+lib/assimp-5.0.1/**
+doc/.*
+cmake-*
