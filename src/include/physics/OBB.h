@@ -7,22 +7,23 @@
 
 #include "BB.h"
 
-using Vector = glm::vec3;
+
 
 class OBB : public BB {
-    // x, y, z
-    Vector pos;
-    std::vector<Vector> Axes;
-    std::vector<Vector> Vertices;
+    /*std::vector<Vector> Axes;
+    std::vector<Vector> Vertices;*/
+protected:
+    void support(const BB *object, const ccd_vec3_t *dir, ccd_vec3_t *vec);
 public:
+
     OBB() {
         type = Type::OBB;
     };
-    void Build(Entity* entity) {
-
-    };
+    void Build(Entity* entity);
     void Build(Tile* tile);
     bool IsIntersecting(BB* other);
+
+
 };
 
 

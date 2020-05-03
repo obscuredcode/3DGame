@@ -8,6 +8,7 @@
 
 #include <physics/AABB.h>
 #include <entity/Player.h>
+#include <physics/OBB.h>
 
 class World {
 
@@ -18,8 +19,8 @@ public:
     Tile teapot;
     AABB block1;
     AABB block2;
-    AABB block3;
-    AABB playerAABB;
+    OBB block3;
+    OBB playerAABB;
     void Create();
     World() {
 
