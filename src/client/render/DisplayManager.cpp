@@ -72,7 +72,6 @@ void DisplayManager::DestroyMainWindow() {
 int DisplayManager::WindowEventHandler(SDL_Event *event) {
     switch (event->window.event) {
         case SDL_WINDOWEVENT_RESIZED:
-            printf("resized");
             SDL_GetWindowSize(SDL_GetWindowFromID(event->window.windowID),&this->width,&this->height); break;
         case SDL_WINDOWEVENT_FOCUS_GAINED:
             GrabMouse();
@@ -90,14 +89,13 @@ void DisplayManager::ShowCursor() {
     SDL_ShowCursor(SDL_TRUE);
 }
 void DisplayManager::GrabMouse() {
-    SDL_CaptureMouse(SDL_TRUE);
+    //SDL_CaptureMouse(SDL_TRUE);
 }
 void DisplayManager::ReleaseMouse() {
     SDL_CaptureMouse(SDL_FALSE);
 }
 bool DisplayManager::Update() {
     //glViewport(0,0,width,height);  // move to frame buffer
-
     SDL_GL_SwapWindow(mainWindow);
     //SDL_UpdateWindowSurface(mainWindow);
 

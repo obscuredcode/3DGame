@@ -13,6 +13,7 @@ class View {
     glm::mat4 ThirdPerson();
     glm::mat4 FirstPerson();
     glm::mat4 View;
+    glm::mat4 projectionMatrix;
     glm::mat4 vp;
 public:
     float nearz = 0.1f;
@@ -20,6 +21,7 @@ public:
     Entity* viewerEntity;
     void RenderCamera(DisplayManager* displayManager, StaticShader* shader);
     glm::mat4 GetView() { return View;}
+    glm::mat4 GetProjection() { return projectionMatrix;}
     glm::mat4 GetVP() {
         return vp;
     }

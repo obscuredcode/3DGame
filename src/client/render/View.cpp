@@ -33,7 +33,7 @@ glm::mat4 View::FirstPerson() {
 void View::RenderCamera(DisplayManager* displayManager, StaticShader* shader) {
 
     //glm::mat4 projectionMatrix = glm::ortho(-20.0f,20.0f,20.0f,-20.0f,-10.0f,100.0f); // In world coordinates
-    glm::mat4 projectionMatrix = glm::perspective(glm::radians(viewerEntity->FoV),
+    projectionMatrix = glm::perspective(glm::radians(viewerEntity->FoV),
                                                   ((float) displayManager->GetWidth())/((float) displayManager->GetHeight()),nearz,farz);
     View = Game::GetInstance()->playerInteraction.thirdPersonView ? ThirdPerson() : FirstPerson();
     vp = projectionMatrix * View; // glm::rotate(View,glm::radians(-yaw),glm::vec3(0,1,0));

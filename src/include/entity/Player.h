@@ -6,14 +6,18 @@
 #define GAME_PLAYER_H
 
 
-#include "entity/Entity.h"
+#include <entity/Entity.h>
+
+class World;
 
 class Player : public Entity {
 public:
     Player() {
 
     }
-    Player(float x, float y, float z) : Entity(x, y, z) {
+    Player(World* world, float x, float y, float z) {
+        this->world = world;
+        this->position = glm::vec3(x,y,z);
     }
 };
 

@@ -21,26 +21,29 @@
 //--------------------------------------------------------------------------------------------------
 // Face queries
 //--------------------------------------------------------------------------------------------------
-struct rnFaceQuery
-	{
-	int Index;
-	float Separation;
-	};
+struct rnFaceQuery {
+    int Index;
+    float Separation;
+};
 
-void rnQueryFaceDirections( rnFaceQuery& Out, const rnTransform& Transform1, const rnHull* Hull1, const rnTransform& Transform2, const rnHull* Hull2 );
-float rnProject( const rnPlane& Plane, const rnHull* Hull );
+void rnQueryFaceDirections(rnFaceQuery &Out, const rnTransform &Transform1, const rnHull *Hull1,
+                           const rnTransform &Transform2, const rnHull *Hull2);
+
+float rnProject(const rnPlane &Plane, const rnHull *Hull);
 
 
 //--------------------------------------------------------------------------------------------------
 // Edge queries
 //--------------------------------------------------------------------------------------------------
-struct rnEdgeQuery
-	{
-	int Index1;
-	int Index2;
-	float Separation;
-	};
+struct rnEdgeQuery {
+    int Index1;
+    int Index2;
+    float Separation;
+};
 
-void rnQueryEdgeDirections( rnEdgeQuery& Out, const rnTransform& Transform1, const rnHull* Hull1, const rnTransform& Transform2, const rnHull* Hull2 );
-float rnProject( const rnVector3& P1, const rnVector3& E1, const rnVector3& P2, const rnVector3& E2, const rnVector3& C1 );
+void rnQueryEdgeDirections(rnEdgeQuery &Out, const rnTransform &Transform1, const rnHull *Hull1,
+                           const rnTransform &Transform2, const rnHull *Hull2);
+
+float
+rnProject(const rnVector3 &P1, const rnVector3 &E1, const rnVector3 &P2, const rnVector3 &E2, const rnVector3 &C1);
 

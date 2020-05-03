@@ -15,13 +15,13 @@ class OBB : public BB {
 protected:
     void support(const BB *object, const ccd_vec3_t *dir, ccd_vec3_t *vec);
 public:
-
     OBB() {
         type = Type::OBB;
     };
     void Build(Entity* entity);
     void Build(Tile* tile);
     bool IsIntersecting(BB* other);
+    bool IsIntersecting(BB* other, CollisionData &data);
 
 
 };

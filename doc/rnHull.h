@@ -19,38 +19,39 @@
 //--------------------------------------------------------------------------------------------------
 // rnHull
 //--------------------------------------------------------------------------------------------------
-struct rnHalfEdge
-	{
-	uint8 Next;
-	uint8 Twin;
-	uint8 Origin;
-	uint8 Face;
-	};
+struct rnHalfEdge {
+    uint8 Next;
+    uint8 Twin;
+    uint8 Origin;
+    uint8 Face;
+};
 
-struct rnFace
-	{
-	uint8 Edge;
-	};
+struct rnFace {
+    uint8 Edge;
+};
 
-struct rnHull
-	{
-	rnVector3 Centroid;
-	int32 VertexCount;
-	rnVector3* Vertices;
-	int32 EdgeCount;
-	rnHalfEdge* Edges;
-	int32 FaceCount;
-	rnFace* Faces;
-	rnPlane* Planes;
-	
-	const rnVector3& GetVertex( int Index ) const;
-	const rnHalfEdge* GetEdge( int Index ) const;
-	const rnFace* GetFace( int Index ) const;
-	const rnPlane& GetPlane( int Index ) const;
-	rnVector3 GetSupport( const rnVector3& Direction ) const;
-	
-	int GetMemory( void ) const;
-	};
+struct rnHull {
+    rnVector3 Centroid;
+    int32 VertexCount;
+    rnVector3 *Vertices;
+    int32 EdgeCount;
+    rnHalfEdge *Edges;
+    int32 FaceCount;
+    rnFace *Faces;
+    rnPlane *Planes;
+
+    const rnVector3 &GetVertex(int Index) const;
+
+    const rnHalfEdge *GetEdge(int Index) const;
+
+    const rnFace *GetFace(int Index) const;
+
+    const rnPlane &GetPlane(int Index) const;
+
+    rnVector3 GetSupport(const rnVector3 &Direction) const;
+
+    int GetMemory(void) const;
+};
 
 
 #include "rnHull.inl"

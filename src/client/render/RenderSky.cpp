@@ -43,6 +43,9 @@ void RenderSky::Render(int fps, float delta) {
     //glDepthMask(GL_FALSE);
     glDepthFunc(GL_LEQUAL);
     shader->Bind();
+    //glm::mat4 inverseView = glm::inverse(view->GetView());
+    //glm::mat4 matrix = glm::mat4(glm::mat3(inverseView));
+    //glm::mat4 viewMatrix = glm::inverse(view->GetProjection() * matrix);
     glm::mat4 viewMatrix = glm::mat4(glm::mat3(view->GetVP()));
     glUniformMatrix4fv(glGetUniformLocation(shader->GetShaderId(), "u_view_matrix" ), 1, GL_FALSE,
                        &viewMatrix[0][0]);

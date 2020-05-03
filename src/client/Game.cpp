@@ -13,7 +13,6 @@
 #include <PlayerInteraction.h>
 #include <glm/gtx/projection.hpp>
 
-
 using ms = std::chrono::milliseconds;
 using hclock = std::chrono::high_resolution_clock;
 
@@ -28,11 +27,11 @@ void Game::ProfileEnd(std::string Name) {
     hclock::time_point time = timeprofiles.find(Name)->second;
     hclock::duration dur = hclock::now() - timeprofiles[Name];
     if(std::chrono::duration_cast<ms>(dur).count() < 10) {
-        printf("%s done in %d micros.\n", Name.c_str(),
-               std::chrono::duration_cast<std::chrono::microseconds>(dur));
+        printf("%s done in %li micros.\n", Name.c_str(),
+               std::chrono::duration_cast<std::chrono::microseconds>(dur).count());
     } else {
-        printf("%s done in %d ms.\n", Name.c_str(),
-                std::chrono::duration_cast<ms>(dur));
+        printf("%s done in %li ms.\n", Name.c_str(),
+                std::chrono::duration_cast<ms>(dur).count());
     }
 }
 bool shouldClose = false;
@@ -67,7 +66,7 @@ int Game::Init(std::filesystem::path wd) {
     //printf("Directory: %s\n",WorkingDirectory.c_str());
     ProfileEnd("Setting Up Display");
     ProfileStart("Initializing Physics");
-    world.player = Player(-5,0,-10);
+    world.player = Player(&world,-5,0,-10);
     playerInteraction = PlayerInteraction(&world.player);
     ProfileEnd("Initializing Physics");
     ProfileStart("Building World");
@@ -142,9 +141,6 @@ void Game::Update(int fps, float delta) {
         //world.player.SetSpeedStrafe(world.player.GetSpeed());
        // world.player.SetSpeed(0);
     }*/
-
-    world.playerAABB.Build(&world.player);
-   if( world.playerAABB.IsIntersecting(&world.block3)) printf("Collision %i!\n",i++);
-    world.player.Update(delta);
+    world.Update(delta);
     renderGame.Render(fps,delta,&world);
 }

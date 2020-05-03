@@ -7,24 +7,25 @@
 
 
 #include <physics/AABB.h>
-#include <entity/Player.h>
 #include <physics/OBB.h>
 
-class World {
+#include <entity/Player.h>
+//class Entity;
+//class Player;
 
+class World {
 public:
     Player player;
     std::vector<Tile> Tiles;
+    std::vector<OBB> StaticBBs;
+    std::vector<Entity> Entities;
     Tile t;
     Tile teapot;
-    AABB block1;
-    AABB block2;
-    OBB block3;
     OBB playerAABB;
     void Create();
+    void Update(float delta);
     World() {
-
-    };
+    }
 };
 
 

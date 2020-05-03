@@ -13,7 +13,7 @@
 #include <glm/gtx/transform.hpp>
 #include <ccd/ccd.h>
 #include <ccd/quat.h>
-
+#include <entity/Entity.h>
 ccd_t ccd;
 
 void OBB::Build(Entity* entity) {
@@ -26,32 +26,11 @@ void OBB::Build(Tile* tile) {
     this->rot = glm::vec3(0,glm::radians(tile->phi),glm::radians(tile->theta));
     this->size = glm::vec3(tile->scaleX,tile->scaleY,tile->scaleZ);
     CCD_INIT(&ccd);
-/*
-    glm::mat4 translationMatrix = glm::translate(pos);
-    glm::mat4 rotationMatrix = glm::rotate(glm::radians(tile->phi),glm::vec3(0,1,0)) * glm::rotate(glm::radians(tile->theta),glm::vec3(0,0,1));
-    glm::mat4 scaleMatrix = glm::scale(glm::vec3(tile->scaleX,tile->scaleY,tile->scaleZ));
-    glm::mat4 trs = translationMatrix * rotationMatrix * scaleMatrix;
-    for(unsigned int i : tile->model->normalIndices) {
-        Axes.push_back(tile->model->normals[i]);
-    }
-    */
-/*for(Vector normal : tile->model->normals) {
-        Axes.push_back(Vector(trs * glm::vec4(normal,0)));
-        printf("n %f, %f, %f\n",normal.x,normal.y,normal.z);
-    }*//*
-
-    for(Vector vertex : tile->model->vertices) {
-        Vertices.push_back(Vector(trs * glm::vec4(vertex,0)));
-        printf("v %f, %f, %f\n",vertex.x,vertex.y,vertex.z);
-    }
-*/
-
 }
 void OBB::support(const BB *object, const ccd_vec3_t *dir, ccd_vec3_t *vec) {
     ccd_vec3_t Direction;
     glm::quat quat = glm::quat(object->rot);
     ccd_quat_t qinv;
-
     ccdVec3Copy(&Direction,dir);
     CCD_QUAT(q,quat.x,quat.y,quat.z,quat.w);
     ccdQuatInvert2(&qinv,&q);
@@ -64,24 +43,23 @@ void OBB::support(const BB *object, const ccd_vec3_t *dir, ccd_vec3_t *vec) {
     ccdVec3Add(vec,&position);
 }
 bool OBB::IsIntersecting(BB *other) {
-/*
-    if(other->type == Type::OBB) {
-        OBB *other = other;
-        Vector relative = pos - other->pos;
-
-        for (int iN = 0; iN < Axes.size(); iN++) {
-            for (int i = 0; i < other->Vertices.size(); i++) {
-                glm::proj(other->Vertices[i], Axes[iN]);
-            }
-        }
-        for (int i = 0; i < other->Axes.size(); i++) {
-
-        }
-    }
-*/
     ccd.support1 = this->supportGlobal;
     ccd.support2 = other->supportGlobal;
     ccd.max_iterations = 100;
     int intersect = ccdGJKIntersect(this,other,&ccd);
     return intersect;
+}
+bool OBB::IsIntersecting(BB *other,CollisionData &data) {
+    ccd.support1 = this->supportGlobal;
+    ccd.support2 = other->supportGlobal;
+    ccd.max_iterations = 100;
+    ccd.epa_tolerance = 0.001f;
+    ccd_real_t depth;
+    ccd_vec3_t dir,pos;
+    int intersect = ccdGJKPenetration(this,other,&ccd,&depth,&dir,&pos);
+    CollisionData collisionData = CollisionData(depth,
+            glm::vec3(ccdVec3X(&dir),ccdVec3Y(&dir),ccdVec3Z(&dir)),
+            glm::vec3(ccdVec3X(&pos),ccdVec3Y(&pos),ccdVec3Z(&pos)));
+    data = collisionData;
+    return !intersect;
 }

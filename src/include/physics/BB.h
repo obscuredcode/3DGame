@@ -9,9 +9,13 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include <tile/Tile.h>
-#include <entity/Entity.h>
+//#include <entity/Entity.h>
 
 #include <ccd/vec3.h>
+#include <physics/CollisionData.h>
+
+class Entity;
+
 
 class BB {
     using Vector = glm::vec3;
@@ -30,5 +34,6 @@ public:
     virtual void Build(Tile* tile) = 0;
     virtual void Build(Entity* entity) = 0;
     virtual bool IsIntersecting(BB* other) = 0;
+    virtual bool IsIntersecting(BB* other, CollisionData &data) = 0;
 };
 #endif //GAME_BB_H
