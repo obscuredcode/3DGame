@@ -11,19 +11,8 @@
 #include <tile/Tile.h>
 #include <entity/Entity.h>
 
-#include <ccd/vec3.h>
-
 class BB {
-    using Vector = glm::vec3;
-protected:
-    static void supportGlobal(const void *obj, const ccd_vec3_t *dir, ccd_vec3_t *vec);
-    virtual void support(const BB * object, const ccd_vec3_t *dir, ccd_vec3_t *vec) {
-        printf("CCD support not setup for BB type %s.\n", type == OBB ? "OBB" : "AABB");
-    };
 public:
-    Vector pos;
-    Vector rot;
-    Vector size;
     enum Type {
         AABB, OBB
     } type;
