@@ -3,6 +3,7 @@
 //
 
 #include <world/World.h>
+#include <client/Game.h>
 
 void World::Create() {
     OBB staticOBB;
@@ -35,4 +36,7 @@ void World::Create() {
 }
 void World::Update(float delta) {
     player.Update(delta);
+}
+void World::PlaySound(Sound sound) {
+    Game::GetInstance()->audioManager.PlaySound(sound);
 }

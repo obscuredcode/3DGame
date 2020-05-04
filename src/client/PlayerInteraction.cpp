@@ -117,6 +117,8 @@ void PlayerInteraction::KeyUp(SDL_KeyboardEvent keyEvent) {
             player->FoV += 2.0f; break;
         case SDLK_c:
             thirdPersonView = not thirdPersonView; break;
+        case SDLK_z:
+            player->world->PlaySound(Sound(glm::vec3(0,0,0),glm::vec3(0,0,0))); break;
         case SDLK_m:
             int mx,my; SDL_GetMouseState(&mx,&my);
             SDL_SetWindowPosition(Game::GetInstance()->displayManager.GetMainWindow(),mx,my); break;

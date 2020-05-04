@@ -10,6 +10,7 @@
 #include <physics/OBB.h>
 
 #include <entity/Player.h>
+#include <client/audio/Sound.h>
 //class Entity;
 //class Player;
 
@@ -23,6 +24,7 @@ public:
     Tile teapot;
     OBB playerAABB;
     void Create();
+    void PlaySound(Sound sound);
     void Update(float delta);
     World() {
     }

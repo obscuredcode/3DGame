@@ -19,6 +19,7 @@ public:
         this->world = world;
         this->position = glm::vec3(x,y,z);
     }
+    void Update(float delta);
 };
 
 

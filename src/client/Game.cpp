@@ -78,7 +78,9 @@ int Game::Init(std::filesystem::path wd) {
     renderGame.view.viewerEntity = &world.player;
     ProfileEnd("Initializing Renderer");
     ProfileStart("Initializing Audio");
+    audioManager = AudioManager(WorkingDirectory);
     audioManager.Init();
+    audioManager.LoadWav("test4");
     ProfileEnd("Initializing Audio");
     ProfileEnd("Initialization");
     int frameCount = 0;
@@ -94,7 +96,7 @@ int Game::Init(std::filesystem::path wd) {
         std::this_thread::sleep_until(nextFrame);
         delta = std::chrono::duration_cast<ms>(clock::now()-start);
     }
-    printf("Quitting.");
+    printf("Quitting.\n");
     renderGame.Destroy();
     audioManager.Destroy();
     displayManager.DestroyMainWindow();
