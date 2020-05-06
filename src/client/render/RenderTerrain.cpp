@@ -16,7 +16,7 @@ void RenderTerrain::LoadShader(StaticShader *shader) {
     this->shader = shader;
 }
 void RenderTerrain::Render(float x, float z,View* view) {
-    glm::mat4 trs = CalculateTRS(x,-2,z,0,0,10,1,10);
+    glm::mat4 trs = CalculateTRS(x,-3,z,0,0,1,1,1);
     glm::mat4 proj = view->GetVP();
     glUniformMatrix4fv(glGetUniformLocation(shader->GetShaderId(), "u_projection_matrix" ), 1, GL_FALSE,
                        &proj[0][0]);
@@ -26,9 +26,9 @@ void RenderTerrain::Render(float x, float z,View* view) {
 
     glEnableVertexAttribArray( 0);
     glBindBuffer(GL_ARRAY_BUFFER,terrainMesh->vertexBufferId);
-    glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,3 * sizeof(GL_FLOAT),0); // setup normals
+    glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,3 * sizeof(GL_FLOAT),0);
 
-    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE); // GL_LINE for mesh
+    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL); // GL_LINE for mesh
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,terrainMesh->indexBuffer);
     glDrawElements(GL_TRIANGLES,terrainMesh->GetNumberOfIndices(),GL_UNSIGNED_INT,0);
 

@@ -103,7 +103,7 @@ void RenderGame::Init(World* world) {
     world->t = Tile(block);
     world->teapot = Tile(tea);
     terrainMesh = new TerrainMesh(res,"complex16");
-    terrainMesh->LoadModel();
+    //terrainMesh->LoadModel();
     Game::GetInstance()->ProfileEnd("Loading Models");
     OBB obb = OBB();
     obb.Build(&world->t);
@@ -190,9 +190,9 @@ void RenderGame::KeyDown(SDL_KeyboardEvent e) {
             if (amb < 0) amb = 0.0f;
             break;
         case SDLK_y:
-            test -= 4.0f; break;
+            terrainMesh->yv += 1; break;
         case SDLK_u:
-            test += 4.0f; break;
+            terrainMesh->yv -= 1; break;
         case SDLK_l:
             x += 1;
             terrainMesh->SetHeight(x,y,2); break;

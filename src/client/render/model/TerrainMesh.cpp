@@ -123,9 +123,10 @@ void Setup() {
 void TerrainMesh::Update() {
     glGenBuffers(1,&vertexBufferId);
     glBindBuffer(GL_ARRAY_BUFFER,vertexBufferId);
-    glBufferData(GL_ARRAY_BUFFER,3 * vertices3.size() * sizeof(float),0,GL_DYNAMIC_DRAW); // 2 *
-    vn = (GLfloat*) glMapBuffer(GL_ARRAY_BUFFER,GL_READ_WRITE);
-
+    glBufferData(GL_ARRAY_BUFFER,3 * vertices3.size() * sizeof(float),NULL,GL_DYNAMIC_DRAW); // 2 *
+    glMapBuffer(GL_ARRAY_BUFFER,GL_READ_WRITE);
+    //vn = (GLfloat*)
+    glGetBufferPointerv(GL_ARRAY_BUFFER, GL_BUFFER_MAP_POINTER, reinterpret_cast<void **>(&vn));
 /*    glUnmapBuffer(GL_ARRAY_BUFFER);
     glGenBuffers(1,&normalBuffer);
     glBindBuffer(GL_ARRAY_BUFFER,normalBuffer);
@@ -147,7 +148,7 @@ void TerrainMesh::SetHeight(int x, int y, float height) {
     if(x > S ) x = S; if(x < 0) x = 0;
     if(y > S) y = S;  if(y < 0) y = 0;
     vn = (GLfloat*) glMapBuffer(GL_ARRAY_BUFFER,GL_READ_WRITE);
-    int pos = x + S * y;
+    int pos = x + yv * y;
     for(int i = 0; i < VERTICES; i ++) {
         vn[3*i+0] = vertices3[i].x;
         vn[3*i+1] = vertices3[i].y + i == pos ? height : 0;
@@ -170,7 +171,7 @@ void TerrainMesh::LoadModel() {
         vertices.push_back(vertices3[i].z);
     }
     VERTICES = vertices.size();*/
-    S = std::floor(std::sqrt(vertices3.size()*3));
+    S = 10; //S = std::floor(std::sqrt(VERTICES))-1;
     printf("terrain vertices: %i, s: %i, indices: %i.\n",VERTICES,S,indexNo);
     glGenVertexArrays(1,&VAO);
     glBindVertexArray(VAO);
@@ -212,6 +213,7 @@ void TerrainMesh::LoadModel() {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices[0], GL_STATIC_DRAW);
 
     Update();
+
 
     glBindBuffer(GL_ARRAY_BUFFER,0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,0);

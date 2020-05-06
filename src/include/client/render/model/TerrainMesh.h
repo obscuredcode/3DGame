@@ -16,6 +16,7 @@ class TerrainMesh : public Model {
     Path res;
     std::string name;
 public:
+    int yv = 10;
     void Setup();
     void Update();
     void LoadModel();

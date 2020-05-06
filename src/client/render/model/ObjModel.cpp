@@ -53,15 +53,16 @@ void ObjModel::LoadVerticesAndIndices(Path res, std::string name,
                     sscanf(line.c_str(), "f %i//%i %i//%i %i//%i\n", &i1, &iN1, &i2, &iN2, &i3, &iN3);
                 } else if (hasNor && hasTex){
                     scanf(line.c_str(), "f %i/%*i/%i %i/%*i/%i %i/%*i/%i\n",&i1, &iN1, &i2, &iN2, &i3, &iN3);
+                    printf("tex and normal coords found!\n");
                 } else {
                     iN1 = 0;
                     iN2 = 0;
                     iN3 = 0;
                     sscanf(line.c_str(), "f %i %i %i\n", &i1, &i2, &i3);
                 }
-                vertexIndices.push_back(i1);
-                vertexIndices.push_back(i2);
-                vertexIndices.push_back(i3);
+                vertexIndices.push_back(i1-1);
+                vertexIndices.push_back(i2-1);
+                vertexIndices.push_back(i3-1);
 
             } else if (line[0] == 'o' or line[0] == '#') {
                 // ignore
@@ -73,6 +74,7 @@ void ObjModel::LoadVerticesAndIndices(Path res, std::string name,
             // printf("errno %i\n",errno);
         }
         model.close();
+        printf("loaded %i\n",vertices.size());
     } catch (std::ifstream::failure e) {
         printf("Model %s, %s code: %d.\n",name.c_str(),e.what(),e.code());
     }
@@ -199,7 +201,7 @@ void ObjModel::LoadModel() {
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER,this->vertexBufferId);
     glBufferData( GL_ARRAY_BUFFER, sizeof( vertexBuffer ), &vertexBuffer[0], GL_STATIC_DRAW );
-    glVertexAttribPointer(0,3, GL_FLOAT, GL_FALSE,sizeof(float) * 3,(void *) (0)); // 4 * sizeof(float)
+    glVertexAttribPointer(0,3, GL_FLOAT, GL_FALSE,sizeof(float) * 3,(void *) (0));
     glEnableVertexAttribArray( 0);
 
     glGenBuffers(1,&this->indexBuffer);
