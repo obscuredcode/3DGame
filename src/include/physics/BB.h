@@ -8,14 +8,15 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/glm.hpp>
 #include <vector>
-#include <tile/Tile.h>
+//#include <tile/Tile.h>
 //#include <entity/Entity.h>
 
 #include <ccd/vec3.h>
 #include <physics/CollisionData.h>
+#include <cstdio>
 
 class Entity;
-
+class Tile;
 
 class BB {
     using Vector = glm::vec3;
@@ -28,6 +29,8 @@ public:
     Vector pos;
     Vector rot;
     Vector size;
+    Tile* tile;
+    Entity* entity;
     enum Type {
         AABB, OBB
     } type;

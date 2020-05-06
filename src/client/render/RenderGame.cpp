@@ -89,8 +89,8 @@ void RenderGame::Init(World* world) {
    // glEnable(GL_DEPTH_CLAMP);
 
     glEnable( GL_DEPTH_TEST );
-    //glEnable(GL_BLEND);
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 
     Game::GetInstance()->ProfileStart("Loading Models");
@@ -134,7 +134,7 @@ void RenderGame::Init(World* world) {
 }
 
 float amb = 0.4f;
-float test = 0.0f;
+
 
 int x = 0;
 int y = 0;
@@ -155,7 +155,6 @@ void RenderGame::Render(int fps,float delta,World* world) {
     for(Tile tile : world->Tiles) {
         switch(tile.id) {
             case 0:
-                tile.phi += test;
                 renderCuboid.Render(tile, tile.color.x, tile.color.y, tile.color.z, tile.color.w); break;
             case 1:
                 renderTea.Render(tile, tile.color.x, tile.color.y, tile.color.z, tile.color.w); break;

@@ -13,13 +13,15 @@ public:
     float depth;
     glm::vec3 direction;
     glm::vec3 position;
+    glm::vec3 separation;
     CollisionData() {
 
     }
-    CollisionData(float depth, glm::vec3 direction, glm::vec3 position) {
+    CollisionData(float depth, glm::vec3 direction, glm::vec3 position,glm::vec3 seperation) {
         this->depth = depth;
         this->direction = direction;
         this->position = position;
+        this->separation = seperation;
     }
 };
 #endif //GAME_COLLISIONDATA_H

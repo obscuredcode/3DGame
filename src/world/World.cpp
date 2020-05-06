@@ -6,26 +6,24 @@
 #include <client/Game.h>
 
 void World::Create() {
-    OBB staticOBB;
-
+    //OBB staticOBB;
+    t.solid = true;
     t.Create(0,-10,0,-5,90,0,5,3,0.2);
     t.SetColor(0.5f,0.0f,0.0f,1);
-    staticOBB.Build(&t);
-    StaticBBs.push_back(staticOBB);
+    t.BuildOBB();
     Tiles.push_back(t);
 
     t.Create(0,0,0,-5,90,0,5,3,0.2);
     t.SetColor(0.0f,0.5f,0.0f,1);
-    staticOBB.Build(&t);
-    StaticBBs.push_back(staticOBB);
+    t.BuildOBB();
     Tiles.push_back(t);
 
     t.Create(0,-5,0,0,0,0,5,3,0.2);
     t.SetColor(0.0f,0.0f,0.5f,1);
-    staticOBB.Build(&t);
-    StaticBBs.push_back(staticOBB);
+    t.BuildOBB();
     Tiles.push_back(t);
 
+    teapot.solid = false;
     teapot.Create(1,-15,-2,-5,0,0,1.0f,1.0f,1.0f);
     teapot.SetColor(1,1,1,1);
     Tiles.push_back(teapot);

@@ -7,15 +7,18 @@
 
 
 #include <client/render/model/ObjModel.h>
-
+#include <physics/OBB.h>
+//class OBB;
 class Tile {
 public:
     unsigned int id;
     float x,y,z = 0;
     float scaleX,scaleY,scaleZ = 1;
     float phi,theta = 0;
+    bool solid;
     glm::vec4 color;
     ObjModel* model;
+    OBB bb;
     Tile() {
 
     }
@@ -36,6 +39,7 @@ public:
     void SetColor(float r, float g, float b, float a) {
         this->color = glm::vec4(r,g,b,a);
     }
+    void BuildOBB() { bb.Build(this);}
 };
 
 

@@ -14,7 +14,7 @@
 
 SDL_Window* mainWindow;
 SDL_GLContext context;
-//SDL_Surface* mainSurface;
+SDL_Surface* mainSurface;
 
 void DisplayManager::Init() {
     Game::GetInstance()->ProfileStart("Setting Up SDL");
@@ -57,7 +57,7 @@ bool DisplayManager::CreateMainWindow(int width, int height,const char* name) { 
     //SDL_GL_MakeCurrent(mainWindow,context);
     //if( glewInit() != GLEW_OK ) printf("GLEW failed to initialize.\n");
     //if(GLEW_VERSION_3_2) printf("GLEW 3.2\n");
-    //mainSurface = SDL_GetWindowSurface(mainWindow);
+    mainSurface = SDL_GetWindowSurface(mainWindow);
     return true;
 }
 void DisplayManager::SetMainWindowFullScreen(bool fullscreen) {

@@ -17,8 +17,6 @@ using ms = std::chrono::milliseconds;
 using hclock = std::chrono::high_resolution_clock;
 
 
-RenderGame renderGame;
-
 
 void Game::ProfileStart(std::string Name) {
     timeprofiles.insert(std::pair<std::string,hclock::time_point>(Name,hclock ::now()));

@@ -17,7 +17,7 @@
 class World {
 public:
     Player player;
-    std::vector<Tile> Tiles;
+    mutable std::vector<Tile> Tiles;
     std::vector<OBB> StaticBBs;
     std::vector<Entity> Entities;
     Tile t;
@@ -28,6 +28,8 @@ public:
     void Update(float delta);
     World() {
     }
+    void SetSolid(int no, bool solid) {Tiles[no].solid = solid;} // TODO: UNSAFE!
+    void SetColor(int no, float color) {Tiles[no].color.w = color;} // TODO: UNSAFE!
 };
 
 

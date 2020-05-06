@@ -13,6 +13,7 @@
 #include <PlayerInteraction.h>
 #include <client/audio/AudioManager.h>
 #include <world/World.h>
+#include <client/render/RenderGame.h>
 
 class Game {
     std::map<std::string,std::chrono::high_resolution_clock::time_point> timeprofiles;
@@ -27,6 +28,7 @@ public:
     World world;
     DisplayManager displayManager;
     AudioManager audioManager;
+    RenderGame renderGame;
     static Game* GetInstance();
     void Kill();
     int Init(std::filesystem::path WorkingDirectory);
