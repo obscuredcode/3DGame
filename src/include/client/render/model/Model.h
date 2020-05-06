@@ -15,6 +15,7 @@ class Model {
 public:
     virtual void LoadModel() = 0;
     virtual GLuint GetNumberOfIndices() = 0;
+    virtual void Destroy();
     GLuint VAO = 0;
     GLuint vertexBufferId = 0;
     GLuint indexBuffer = 0;

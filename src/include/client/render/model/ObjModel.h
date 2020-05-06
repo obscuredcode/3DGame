@@ -28,6 +28,15 @@ public:
         this->name = name;
         this->res = res;
     };
+    static void LoadVerticesAndIndices(Path res, std::string name,
+            std::vector<glm::vec3>& vertices,
+            std::vector<unsigned int>& vertexIndices
+            );
+    static void LoadObj(Path res, std::string name, std::vector<glm::vec3>& vertices,
+                        std::vector<glm::vec2>& texUV,
+                        std::vector<glm::vec3>& normals,
+                        std::vector<unsigned int>& vertexIndices,
+                        std::vector<unsigned int>& normalIndices);
     void LoadModel();
     GLuint GetNumberOfIndices();
 };

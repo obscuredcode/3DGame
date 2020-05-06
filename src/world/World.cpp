@@ -30,9 +30,9 @@ void World::Create() {
     teapot.SetColor(1,1,1,1);
     Tiles.push_back(teapot);
 
-    t.Create(0,-5,-3,3,0,0,1000,0.1,1000);
-    t.SetColor(0.75f,0.75f,0.75f,1.0f);
-    Tiles.push_back(t);
+    //t.Create(0,-5,-3,3,0,0,1000,0.1,1000);
+    //t.SetColor(0.75f,0.75f,0.75f,1.0f);
+    //Tiles.push_back(t);
 }
 void World::Update(float delta) {
     player.Update(delta);

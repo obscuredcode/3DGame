@@ -27,6 +27,7 @@
 #include <client/render/RenderSky.h>
 #include <physics/OBB.h>
 #include <physics/AABB.h>
+#include <client/render/RenderTerrain.h>
 
 #define GL_GLEXT_PROTOTYPES
 
@@ -61,10 +62,14 @@ static inline void mat4x4_ortho( t_mat4x4 out, float left, float right, float bo
 
 ObjModel* block;
 ObjModel* tea;
+TerrainMesh* terrainMesh;
 
 RenderCuboid renderCuboid = RenderCuboid();
 RenderCuboid renderTea = RenderCuboid();
 RenderSky renderSky;
+RenderTerrain renderTerrain;
+
+StaticShader* terrainShader;
 GLuint fbo;
 GLuint rbo;
 
@@ -73,6 +78,10 @@ void RenderGame::Init(World* world) {
     shader = new StaticShader( res , "original","original");
     shader->Load();
     shader->Build(true);
+
+    terrainShader = new StaticShader(res,"terrain","terrain");
+    terrainShader->Load();
+    terrainShader->Build(false);
     Game::GetInstance()->ProfileEnd("Shaders");
     glEnable(GL_CULL_FACE);
     //glEnable(GL_CLIP_PLANE0);
@@ -93,7 +102,8 @@ void RenderGame::Init(World* world) {
     renderTea.Prepare();
     world->t = Tile(block);
     world->teapot = Tile(tea);
-    printf("model %p",world->t.model);
+    terrainMesh = new TerrainMesh(res,"complex16");
+    terrainMesh->LoadModel();
     Game::GetInstance()->ProfileEnd("Loading Models");
     OBB obb = OBB();
     obb.Build(&world->t);
@@ -101,6 +111,10 @@ void RenderGame::Init(World* world) {
     renderSky = RenderSky(res,&view);
     renderSky.Init();
     Game::GetInstance()->ProfileEnd("Loading Sky");
+    Game::GetInstance()->ProfileStart("Loading Terrain Renderer");
+    renderTerrain = RenderTerrain(terrainMesh);
+    renderTerrain.Prepare();
+    Game::GetInstance()->ProfileEnd("Loading Terrain Renderer");
     //t_mat4x4 projection_matrix;
     //mat4x4_ortho( projection_matrix, (float)0, (float)600, (float)400, (float)0, 0.0f, 100.0f );
     //glUniformMatrix4fv( glGetUniformLocation(shader->GetShaderId(), "u_projection_matrix" ), 1, GL_FALSE, projection_matrix );
@@ -122,6 +136,8 @@ void RenderGame::Init(World* world) {
 float amb = 0.4f;
 float test = 0.0f;
 
+int x = 0;
+int y = 0;
 
 void RenderGame::Render(int fps,float delta,World* world) {
     //glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -148,17 +164,22 @@ void RenderGame::Render(int fps,float delta,World* world) {
 
     shader->UnBind();
     renderSky.Render(fps,delta);
+    terrainShader->Bind();
+    renderTerrain.LoadShader(terrainShader);
+    renderTerrain.Render(0,0,&view);
+    terrainShader->UnBind();
     displayManager->Update();
 
     char s[256];
     sprintf(s,       "s per tick %.2f,fps %d,yaw %.2f,pitch %.2f,FoV %.2f, "
-                     "x %.2f, z %.2f,width %d, height, %d, test %.2f\n"
+                     "x %.2f, z %.2f,width %d, height, %d, x %i, y %i\n"
             ,delta,fps,
             view.viewerEntity->GetRotationVec3().y,view.viewerEntity->GetHeadPitch(),view.viewerEntity->FoV,
             view.viewerEntity->GetPositionVec3().x,view.viewerEntity->GetPositionVec3().z,
-            displayManager->GetWidth(),displayManager->GetHeight(),test);
+            displayManager->GetWidth(),displayManager->GetHeight(),x, y);
     displayManager->SetTitle(s);
 }
+
 void RenderGame::KeyDown(SDL_KeyboardEvent e) {
     switch(e.keysym.sym) {
         case SDLK_RIGHTBRACKET:
@@ -172,6 +193,18 @@ void RenderGame::KeyDown(SDL_KeyboardEvent e) {
             test -= 4.0f; break;
         case SDLK_u:
             test += 4.0f; break;
+        case SDLK_l:
+            x += 1;
+            terrainMesh->SetHeight(x,y,2); break;
+        case SDLK_k:
+            x -= 1;
+            terrainMesh->SetHeight(x,y,2); break;
+        case SDLK_PERIOD:
+            y += 1;
+            terrainMesh->SetHeight(x,y,2); break;
+        case SDLK_COMMA:
+            y -= 1;
+            terrainMesh->SetHeight(x,y,2); break;
         case SDLK_ESCAPE:
             displayManager->ShowCursor();
             displayManager->ReleaseMouse();
