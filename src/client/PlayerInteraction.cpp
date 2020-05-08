@@ -67,7 +67,9 @@ void ScreenPosToWorldRay(
     out_direction = glm::normalize(lRayDir_world);
 }
 
-
+bool ascending(const std::tuple<float,Tile*>& a,const std::tuple<float,Tile*>& b) {
+    return std::get<0>(a) < std::get<0>(b);
+}
 void PlayerInteraction::MouseUpdate() {
     int mx,my;
     SDL_GetMouseState(&mx,&my);
@@ -91,25 +93,30 @@ void PlayerInteraction::MouseUpdate() {
     player->SetHeadPitch(headPitch);
 
     SDL_GetMouseState(&lastMouseX,&lastMouseY);
+
+    SDL_GetMouseState(&mx,&my);
     View* view = &Game::GetInstance()->renderGame.view;
     glm::vec3 out_origin;
     glm::vec3 out_direction;
     ScreenPosToWorldRay(mx,my, Center_mx * 2, Center_my * 2,
-            view->GetView(),view->GetProjection(),
-            out_origin,out_direction
+                        view->GetView(),view->GetProjection(),
+                        out_origin,out_direction
     );
     for(int i = 0; i < player->world->Tiles.size(); i++) {
         float dis;
         if(player->world->Tiles[i].bb.TestRayOBBIntersection(out_origin,out_direction,dis)) {
-                if(dis < 10.0f && dis != 0.000000) {
-                    player->world->SetColor(i,1.0f);
-                    printf("distance: %f\n", dis);
-                }
+            if(dis < 10.0f && dis != 0.000000) {
+                player->world->SetColor(i,1);
+                //player->SelectedTiles.push_back(std::make_tuple(dis,&player->world->Tiles[i]));
+            }
         } else {
-            player->world->SetColor(i,0.5f);
+            player->world->SetColor(i,0.5);
         }
-
     }
+   // player->SelectedTiles.clear();
+
+   // std::sort(player->SelectedTiles.front(),player->SelectedTiles.back(),ascending);
+    //std::get<1>(player->SelectedTiles.back())->SetColor(1,0,0,1);
     //lastMouseX = mx;
     //lastMouseY = my;
 }
@@ -152,4 +159,7 @@ void PlayerInteraction::KeyUp(SDL_KeyboardEvent keyEvent) {
         case SDLK_q:
             Game::GetInstance()->Kill();
     }
+}
+
+void PlayerInteraction::MouseDown(SDL_MouseButtonEvent event) {
 }

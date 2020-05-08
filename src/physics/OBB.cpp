@@ -11,6 +11,7 @@
 #include <algorithm>
 #include <set>
 #include <glm/gtx/transform.hpp>
+#include <glm/gtx/closest_point.hpp>
 #include <ccd/ccd.h>
 #include <ccd/quat.h>
 #include <entity/Entity.h>
@@ -73,10 +74,10 @@ bool OBB::IsIntersecting(BB *other,CollisionData &data) {
 
 //http://www.opengl-tutorial.org/miscellaneous/clicking-on-objects/picking-with-custom-ray-obb-function/
 float tMin = 0.0f;
-float tMax = 1000.0f;
+float tMax = 10.0f;
 bool TestAxis(glm::vec3 axis, glm::vec3 delta, glm::vec3 ray_direction, glm::vec3 aabb_min,glm::vec3 aabb_max) {
     tMin = 0.0f;
-    tMax = 1000.0f;
+    tMax = 10.0f;
     float e = glm::dot(axis, delta);
     float f = glm::dot(ray_direction, axis);
     if ( fabs(f) > 0.001f ){
@@ -115,5 +116,19 @@ bool OBB::TestRayOBBIntersection(	glm::vec3 ray_origin,        // Ray origin, in
         return true;
     }
     return false;
-
 };
+
+float maxDistance = 10;
+
+void supportSphere(const BB* object,const ccd_vec3_t *dir, ccd_vec3_t *vec) {
+    ccdVec3Set(vec, ccdVec3X(dir)*maxDistance,ccdVec3X(dir)*maxDistance,ccdVec3X(dir)*maxDistance);
+    CCD_VEC3(position,object->pos.x,object->pos.y,object->pos.z);
+    ccdVec3Add(vec,&position);
+}
+bool OBB::TestRayClosestPoint(glm::vec3 ray_origin,        // Ray origin, in world space
+                         glm::vec3 ray_direction,float maxDistance) {
+    // test intersection of spheres with object over maxDistance in direction of ray
+    // find closest sphere?
+    // find closest sphere?
+    glm::closestPointOnLine(this->pos,ray_origin,ray_direction);
+}

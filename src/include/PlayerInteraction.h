@@ -25,6 +25,8 @@ public:
     void CheckKeys();
     void KeyDown(SDL_KeyboardEvent keyEvent);
     void KeyUp(SDL_KeyboardEvent keyEvent);
+
+    void MouseDown(SDL_MouseButtonEvent event);
 };
 
 

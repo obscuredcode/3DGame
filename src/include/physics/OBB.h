@@ -25,6 +25,8 @@ public:
 
 
     bool TestRayOBBIntersection(glm::vec3 ray_origin, glm::vec3 ray_direction, float &intersection_distance);
+
+    bool TestRayClosestPoint(glm::vec3 ray_origin, glm::vec3 ray_direction, float maxDistance);
 };
 
 

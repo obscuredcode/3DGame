@@ -12,6 +12,7 @@ class World;
 
 class Player : public Entity {
 public:
+    std::vector<std::tuple<float,Tile*>> SelectedTiles;
     Player() {
 
     }

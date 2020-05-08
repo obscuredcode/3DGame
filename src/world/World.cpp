@@ -9,17 +9,17 @@ void World::Create() {
     //OBB staticOBB;
     t.solid = true;
     t.Create(0,-10,0,-5,90,0,5,3,0.2);
-    t.SetColor(0.5f,0.0f,0.0f,1);
+    t.SetColor(0.5f,0.0f,0.0f,0.5f);
     t.BuildOBB();
     Tiles.push_back(t);
 
     t.Create(0,0,0,-5,90,0,5,3,0.2);
-    t.SetColor(0.0f,0.5f,0.0f,1);
+    t.SetColor(0.0f,0.5f,0.0f,0.5f);
     t.BuildOBB();
     Tiles.push_back(t);
 
     t.Create(0,-5,0,0,0,0,5,3,0.2);
-    t.SetColor(0.0f,0.0f,0.5f,1);
+    t.SetColor(0.0f,0.0f,0.5f,0.5f);
     t.BuildOBB();
     Tiles.push_back(t);
 

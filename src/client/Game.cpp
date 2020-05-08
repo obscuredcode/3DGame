@@ -106,6 +106,8 @@ void Game::Update(int fps, float delta) {
     if(SDL_PollEvent(&event)) {
         switch(event.type) {
             case SDL_QUIT: Kill(); break;
+            case SDL_MOUSEBUTTONDOWN:
+                playerInteraction.MouseDown(event.button);
             case SDL_KEYDOWN:
                 playerInteraction.KeyDown(event.key);
                 renderGame.KeyDown(event.key); break;
@@ -116,31 +118,6 @@ void Game::Update(int fps, float delta) {
     //SDL_PumpEvents();
     playerInteraction.CheckKeys();
     playerInteraction.MouseUpdate();
-/*    world.playerAABB.Build(&world.player);
-    if(world.playerAABB.IsIntersecting(&world.block3)) {
-        glm::vec3 normal = glm::vec3(0,0,1);
-        glm::vec3 speed = glm::vec3 (world.player.GetSpeedStrafe(),0,world.player.GetSpeed());
-        glm::mat4 r =glm::rotate(glm::identity<glm::mat4>(),world.player.GetRotationVec3().y,glm::vec3(0,1,1));
-        speed = glm::vec3(r*glm::vec4(speed,0));
-        PrintVec3("Speed",speed);
-        speed = speed - (normal * glm::dot(speed,normal));
-        world.player.SetSpeed(-speed.z);
-        world.player.SetSpeedStrafe(-speed.x);
-        //world.player.SetSpeedStrafe(world.player.GetSpeed());
-        //world.player.SetSpeed(0);
-    }
-    if(world.playerAABB.IsIntersecting(&world.block1)) {
-        glm::vec3 normal = glm::vec3(1,0,0);
-        glm::vec3 speed = glm::vec3 (world.player.GetSpeedStrafe(),0,world.player.GetSpeed());
-        glm::mat4 r =glm::rotate(glm::identity<glm::mat4>(),world.player.GetRotationVec3().y,glm::vec3(0,1,1));
-        speed = glm::vec3(r*glm::vec4(speed,0));
-        PrintVec3("Speed",speed);
-        speed = speed - (normal * glm::dot(speed,normal));
-        world.player.SetSpeed(-speed.z);
-        world.player.SetSpeedStrafe(-speed.x);
-        //world.player.SetSpeedStrafe(world.player.GetSpeed());
-       // world.player.SetSpeed(0);
-    }*/
     world.Update(delta);
     renderGame.Render(fps,delta,&world);
 }
